@@ -11,36 +11,19 @@ repositories {
 buildscript {
     repositories {
         mavenCentral()
+        mavenLocal()
     }
     dependencies {
-        classpath 'ws.antonov.gradle.plugins:gradle-plugin-protobuf:0.9.1'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.1.0-SNAPSHOT'
     }
-}
-
-// Adds the 'protocompiler' configuration to dependencies
-configurations {
-    protocompiler
 }
 
 dependencies {
     compile 'io.grpc:grpc-all:0.1.0-SNAPSHOT',
             'org.glassfish:javax.json:1.0.4'
-    protocompiler('io.grpc:grpc-compiler:0.1.0-SNAPSHOT') {
-        transitive = false
-    }
 }
 
-task unzipCompiler(type: Copy) {
-    into file("${project.buildDir}/compiler/")
-    from {
-        configurations.protocompiler.collect {
-            zipTree(it)
-        }
-    }
-}
-
-protobufCodeGenPlugins = ["java_plugin:${project.buildDir}/compiler/java_plugin"]
-generateProto.dependsOn unzipCompiler
+protobufNativeCodeGenPluginDeps = ["java_plugin:io.grpc:grpc-compiler:0.1.0-SNAPSHOT"]
 
 task routeGuideServer(type: JavaExec) {
     main = "io.grpc.examples.routeguide.RouteGuideServer"
