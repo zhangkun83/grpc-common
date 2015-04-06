@@ -6,6 +6,9 @@ description = "grpc Examples"
 repositories {
     mavenCentral()
     mavenLocal()
+    maven {
+      url 'https://oss.sonatype.org/content/repositories/comgoogle-1036'
+    }
 }
 
 buildscript {
@@ -23,6 +26,7 @@ dependencies {
             'org.glassfish:javax.json:1.0.4'
 }
 
+protocDep = "com.google.protobuf:protoc:3.0.0-alpha-3-pre"
 protobufNativeCodeGenPluginDeps = ["java_plugin:io.grpc:grpc-compiler:0.1.0-SNAPSHOT"]
 
 task routeGuideServer(type: JavaExec) {
