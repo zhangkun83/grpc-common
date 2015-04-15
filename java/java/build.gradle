@@ -10,8 +10,16 @@ repositories {
       url 'https://oss.sonatype.org/content/repositories/comgoogle-1041'
     }
     maven {
+      url 'https://oss.sonatype.org/content/repositories/iogrpc-1000'
+    }
+    maven {
       url 'https://oss.sonatype.org/content/repositories/snapshots/'
     }
+}
+
+[compileJava, compileTestJava].each() {
+    it.options.compilerArgs += ["-Xlint:unchecked", "-Xlint:deprecation", "-Xlint:-options"]
+    it.options.encoding = "UTF-8"
 }
 
 buildscript {
@@ -20,7 +28,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.1.0'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.1.1-SNAPSHOT'
     }
 }
 
@@ -30,7 +38,7 @@ dependencies {
 }
 
 protocDep = "com.google.protobuf:protoc:3.0.0-alpha-3-pre"
-protobufNativeCodeGenPluginDeps = ["java_plugin:io.grpc:protoc-gen-grpc-java:0.1.0-SNAPSHOT"]
+protobufNativeCodeGenPluginDeps = ["java_plugin:io.grpc:protoc-gen-grpc-java:0.1.0"]
 
 task routeGuideServer(type: JavaExec) {
     main = "io.grpc.examples.routeguide.RouteGuideServer"
