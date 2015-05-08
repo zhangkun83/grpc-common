@@ -6,6 +6,33 @@
   <version>0.1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>gRPC Java example</name>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <prerequisites>
+    <!-- This is the minimum version currently required by os-maven-plugin -->
+    <maven>3.1.0</maven>
+  </prerequisites>
+  <repositories>
+    <repository>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+        <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    <repository>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>sonatype-snapshots</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </repository>
+  </repositories>
   <pluginRepositories>
     <pluginRepository>
       <releases>
@@ -19,6 +46,9 @@
       <url>https://repo.maven.apache.org/maven2</url>
     </pluginRepository>
     <pluginRepository>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
       <id>sonatype-snapshots</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
     </pluginRepository>
@@ -31,7 +61,7 @@
     <extensions>
       <extension>
         <groupId>kr.motd.maven</groupId>
-      <artifactId>os-maven-plugin</artifactId>
+        <artifactId>os-maven-plugin</artifactId>
         <version>1.2.3.Final</version>
       </extension>
     </extensions>
@@ -51,13 +81,22 @@
         <configuration>
           <protocArtifact>com.google.protobuf:protoc:3.0.0-alpha-2:exe:${os.detected.classifier}</protocArtifact>
           <pluginId>grpc-java</pluginId>
-          <protocPluginArtifact>io.grpc:protoc-gen-grpc-java:0.1.0-SNAPSHOT:exe:${os.detected.classifier}</protocPluginArtifact>
+          <pluginArtifact>io.grpc:protoc-gen-grpc-java:0.1.0-SNAPSHOT:exe:${os.detected.classifier}</pluginArtifact>
         </configuration>
         <executions>
           <execution>
+            <id>protoc-compile</id>
             <phase>generate-sources</phase>
             <goals>
+              <goal>compile</goal>
               <goal>compile-custom</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>protoc-test-compile</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>test-compile</goal>
               <goal>test-compile-custom</goal>
             </goals>
           </execution>
