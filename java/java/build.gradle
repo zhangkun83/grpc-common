@@ -1,14 +1,11 @@
 apply plugin: 'application'
-apply plugin: 'protobuf'
+apply plugin: 'com.google.protobuf'
 
 description = "grpc Examples"
 
 repositories {
     mavenCentral()
     mavenLocal()
-    maven {
-      url 'https://oss.sonatype.org/content/repositories/iogrpc-1000'
-    }
     maven {
       url 'https://oss.sonatype.org/content/repositories/snapshots/'
     }
@@ -28,7 +25,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.1.1-SNAPSHOT'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.3.1'
     }
 }
 
@@ -38,7 +35,7 @@ dependencies {
 }
 
 protocDep = "com.google.protobuf:protoc:3.0.0-alpha-2"
-protobufNativeCodeGenPluginDeps = ["java_plugin:io.grpc:protoc-gen-grpc-java:0.1.0"]
+protobufNativeCodeGenPluginDeps = ["java_plugin:io.grpc:protoc-gen-grpc-java:0.1.0-SNAPSHOT"]
 
 task routeGuideServer(type: JavaExec) {
     main = "io.grpc.examples.routeguide.RouteGuideServer"
